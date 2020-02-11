@@ -19,13 +19,13 @@ class GameScene: SKScene {
   var scoreValue = 0;
 
   //Set the health of the player
-  var healthValue = 100;
+  var healthValue = 100
 
   //Set the number of enemies that are currently in the game
-  var enemyCount = 0
+  var enemyCount = 2
 
   //Set the maximum number of enemies that should exist at once
-  let MAX_ENEMIES = 10
+  let MAX_ENEMIES = 50
 
   //Setup a score needed to win
   let WIN_SCORE = 1000
@@ -64,7 +64,7 @@ class GameScene: SKScene {
     backgroundMusic.autoplayLooped = true
 
     //Add the background music to our world
-    addChild(backgroundMusic)
+//    addChild(backgroundMusic)
   }
 
   //Create an enemy and add to the world

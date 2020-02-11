@@ -148,7 +148,7 @@ class Player{
     //Run the actions to move and remove the projectile
     projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
 
-    self.playerSprite.parent?.run(SKAction.playSoundFileNamed("pew-pew-lei.caf", waitForCompletion: false))
+//    self.playerSprite.parent?.run(SKAction.playSoundFileNamed("pew-pew-lei.caf", waitForCompletion: false))
   }
 
   //Setup the Physics world for the player

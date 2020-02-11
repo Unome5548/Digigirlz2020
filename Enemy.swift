@@ -33,16 +33,16 @@ class Enemy {
   var enemySprite: SKSpriteNode!
 
   //Max Move Speed of the Enemy
-  let MAX_SPEED:CGFloat = 110
+  let MAX_SPEED:CGFloat = 150
 
   //Values should be between 30 and 100.
   var enemySpeed:CGFloat = 70
 
   //Width of the enemy in pixels
-  var enemyWidth:CGFloat = 130
+  var enemyWidth:CGFloat = 100
 
   //Height of the enemy in pixels
-  var enemyHeight:CGFloat = 100
+  var enemyHeight:CGFloat = 75
 
   //Speed that the enemy should fire projectiles
   var enemyFireSpeed:Double = 3
@@ -76,10 +76,11 @@ class Enemy {
   /// Setup the Movement pattern of our enemy
   func setupEnemyMovement() {
 
-//    moveEnemyToPoint()
-    moveEnemyBackAndForthForever()
-//    moveAndWaitEnemyForever()
-//    moveEnemyRandomly()
+// moveEnemyToPoint()
+ moveEnemyBackAndForthForever()
+// moveAndWaitEnemyForever()
+// moveEnemyRandomly()
+//    moveEnemyCustom()
   }
 
 
@@ -211,7 +212,7 @@ class Enemy {
     // Change 300 to a different number to move to that y coordinate.
     // Change the duration from 1 to something bigger to make the movement faster.
     // Copy and paste this to create more move actions. Make sure to give them different names
-    let moveAction1 = SKAction.move(to: CGPoint(x: 200, y: 300), duration: TimeInterval(1))
+    let moveAction1 = SKAction.move(to: CGPoint(x: 50, y: 300), duration: TimeInterval(5))
 
     //Example Wait Action. Change the time from 1 to something else to make the wait longer or shorter
     let waitAction = SKAction.wait(forDuration: TimeInterval(1))
