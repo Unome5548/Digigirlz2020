@@ -16,13 +16,17 @@ class GameScene: SKScene {
   let playerHealthLabel = SKLabelNode(text: "HEALTH: 0")
 
   //Set the score to 0 to start the game
-  var scoreValue = 0;
+  var currentScore = 0;
 
   //Set the health of the player
-  var healthValue = 100
+  var playerHealth = 100
+
+  var playerStartX = 400
+
+  var playerStartY = 100
 
   //Set the number of enemies that are currently in the game
-  var enemyCount = 2
+  var enemyCount = 0
 
   //Set the maximum number of enemies that should exist at once
   let MAX_ENEMIES = 50
@@ -38,7 +42,7 @@ class GameScene: SKScene {
     setupUI()
 
     //Create our player
-    player = Player(size: size)
+    player = Player(size: size, startX: playerStartX, startY: playerStartY)
 
     //Add the player to the world
     addChild(player.playerSprite)
@@ -119,7 +123,7 @@ class GameScene: SKScene {
     //Setup a Health indicator in the to pright of the screen
     playerHealthLabel.position = CGPoint(x: size.width * 0.85, y: size.height * 0.8)
     playerHealthLabel.fontName = "HelveticaNeue-Bold"
-    playerHealthLabel.text = "HEATLH: \(healthValue)"
+    playerHealthLabel.text = "HEALTH: \(playerHealth)"
     //Add the health label to the world
     addChild(playerHealthLabel)
   }
@@ -149,9 +153,9 @@ class GameScene: SKScene {
     projectile.removeFromParent()
 
     //Increase the score for hitting a monster
-    scoreValue += 100
+    currentScore += 100
     //Change the text on our score label
-    scoreLabel.text = "SCORE: \(scoreValue)"
+    scoreLabel.text = "SCORE: \(currentScore)"
 
     //Setup an action to remove the monster
     let removeMonsterAction = SKAction.run {
@@ -169,10 +173,10 @@ class GameScene: SKScene {
     enemyCount -= 1
 
     //Show the win screen if we exceed the necesssary score
-    if scoreValue >= WIN_SCORE {
+    if currentScore >= WIN_SCORE {
       //Show the Game Over Screen
       let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-      let gameOverScene = GameOverScene(size: size, won: true, score: scoreValue)
+      let gameOverScene = GameOverScene(size: size, won: true, score: currentScore)
       self.view?.presentScene(gameOverScene, transition: reveal)
     }
   }
@@ -183,19 +187,19 @@ class GameScene: SKScene {
     enemyCount -= 1
 
     //Decrease the score
-    scoreValue -= 10
+    currentScore -= 10
     //Decrease the health
-    healthValue -= 10
+    playerHealth -= 10
 
     //Update the Score and Health Labels
-    scoreLabel.text = "SCORE: \(scoreValue)"
-    playerHealthLabel.text = "HEALTH: \(healthValue)"
+    scoreLabel.text = "SCORE: \(currentScore)"
+    playerHealthLabel.text = "HEALTH: \(playerHealth)"
 
     //If the player has no more health, show the game over screen
-    if healthValue <= 0 {
+    if playerHealth <= 0 {
       //Show the Game Over SCreen
       let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-      let gameOverScene = GameOverScene(size: size, won: false, score: scoreValue)
+      let gameOverScene = GameOverScene(size: size, won: false, score: currentScore)
       self.view?.presentScene(gameOverScene, transition: reveal)
     }
   }

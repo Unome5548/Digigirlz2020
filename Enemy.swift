@@ -35,17 +35,20 @@ class Enemy {
   //Max Move Speed of the Enemy
   let MAX_SPEED:CGFloat = 150
 
-  //Values should be between 30 and 100.
+  //Values should be between 30 and 150.
   var enemySpeed:CGFloat = 70
 
   //Width of the enemy in pixels
   var enemyWidth:CGFloat = 100
 
   //Height of the enemy in pixels
-  var enemyHeight:CGFloat = 75
+  var enemyHeight:CGFloat = 70
 
-  //Speed that the enemy should fire projectiles
-  var enemyFireSpeed:Double = 3
+  //Width of the enemy projectile
+  var enemyProjectileWidth:CGFloat = 30
+
+  //Height of the enemy projectile
+  var enemyProjectileHeight:CGFloat = 40
 
   init(size: CGSize) {
     //Create a new SKSpriteNode with the Default Enemy Image
@@ -76,10 +79,10 @@ class Enemy {
   /// Setup the Movement pattern of our enemy
   func setupEnemyMovement() {
 
-// moveEnemyToPoint()
- moveEnemyBackAndForthForever()
-// moveAndWaitEnemyForever()
-// moveEnemyRandomly()
+//    moveEnemyToPoint()
+    moveEnemyBackAndForthForever()
+//    moveAndWaitEnemyForever()
+//    moveEnemyRandomly()
 //    moveEnemyCustom()
   }
 
@@ -91,7 +94,7 @@ class Enemy {
       //Run the following sequence
       SKAction.sequence([
         //Wait the enemy fire time
-        SKAction.wait(forDuration: enemyFireSpeed),
+        SKAction.wait(forDuration: 3),
         //Run the enemy Shoot function
         SKAction.run({
           self.enemyShoot()
@@ -199,7 +202,8 @@ class Enemy {
         //Wait the duration time so that we don't move to a new location till the prior one was achieved.
       },
       SKAction.wait(forDuration: TimeInterval(duration)),
-      //Have the enemy shoot when he gets to his location
+      //Have the enemy shoot when he gets to his location,
+      getEnemyShootAction()
       ])
     ))
   }
@@ -212,7 +216,7 @@ class Enemy {
     // Change 300 to a different number to move to that y coordinate.
     // Change the duration from 1 to something bigger to make the movement faster.
     // Copy and paste this to create more move actions. Make sure to give them different names
-    let moveAction1 = SKAction.move(to: CGPoint(x: 50, y: 300), duration: TimeInterval(5))
+    let moveAction1 = SKAction.move(to: CGPoint(x: 300, y: 400), duration: TimeInterval(5))
 
     //Example Wait Action. Change the time from 1 to something else to make the wait longer or shorter
     let waitAction = SKAction.wait(forDuration: TimeInterval(1))
@@ -227,6 +231,11 @@ class Enemy {
   /// Figure out how long a single action should last based on a total duration time, and the speed settings
   /// - Parameter maxDuration: Total amount of time that would elapse at the slowest speed setting
   func calculateActionDuration(maxDuration: CGFloat) -> CGFloat{
+    //safegaurd against bad values
+    if enemySpeed >= MAX_SPEED {
+      enemySpeed = MAX_SPEED - 1
+    }
+
     //Convert our speed setting to a value between 0 - 1
     let normalizedSpeed = enemySpeed/MAX_SPEED
 
@@ -253,10 +262,11 @@ class Enemy {
   /// Create a projectile and send it straight down
   func enemyShoot(){
     //Create a new Projectile Sprite
-    let projectile = SKSpriteNode(imageNamed: "projectile")
+    let projectile = SKSpriteNode(imageNamed: "enemyProjectile")
 
     //Set the location of the new projectile to the enemies current location
     projectile.position = enemySprite.position
+    projectile.size = CGSize(width: enemyProjectileWidth, height: enemyProjectileHeight)
 
     //Create physics for the projectile
     projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)

@@ -59,12 +59,12 @@ class Player{
   ], timePerFrame: 0.028)
 
 
-  init(size: CGSize){
+  init(size: CGSize, startX: Int, startY: Int){
     //Setup a new player with the defaultPlayerImage
     playerSprite = SKSpriteNode(imageNamed: defaultPlayerImage)
 
     //Set the player's starting location to half the width of the screen at 10% height
-    playerSprite.position = CGPoint(x: size.width * 0.50, y: size.height * 0.1)
+    playerSprite.position = CGPoint(x: startX, y: startY)
 
     //Set the size of the player
     playerSprite.size = CGSize(width: playerWidth, height: playerHeight)
